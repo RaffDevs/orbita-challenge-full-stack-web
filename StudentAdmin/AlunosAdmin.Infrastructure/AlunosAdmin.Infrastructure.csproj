@@ -6,4 +6,17 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\AlunosAdmin.Core\AlunosAdmin.Core.csproj" />
+      <ProjectReference Include="..\AlunosAdmin.CrossCutting\AlunosAdmin.CrossCutting.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+
 </Project>

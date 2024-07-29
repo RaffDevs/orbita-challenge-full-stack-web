@@ -15,4 +15,11 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\AlunosAdmin.Application\AlunosAdmin.Application.csproj" />
+      <ProjectReference Include="..\AlunosAdmin.Core\AlunosAdmin.Core.csproj" />
+      <ProjectReference Include="..\AlunosAdmin.CrossCutting\AlunosAdmin.CrossCutting.csproj" />
+      <ProjectReference Include="..\AlunosAdmin.Infrastructure\AlunosAdmin.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>
