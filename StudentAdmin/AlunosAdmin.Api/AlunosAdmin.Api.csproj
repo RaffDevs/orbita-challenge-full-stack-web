@@ -7,6 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\AlunosAdmin.CrossCutting\AlunosAdmin.CrossCutting.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -14,12 +18,5 @@
         <PackageReference Include="Npgsql" Version="8.0.3" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\AlunosAdmin.Application\AlunosAdmin.Application.csproj" />
-      <ProjectReference Include="..\AlunosAdmin.Core\AlunosAdmin.Core.csproj" />
-      <ProjectReference Include="..\AlunosAdmin.CrossCutting\AlunosAdmin.CrossCutting.csproj" />
-      <ProjectReference Include="..\AlunosAdmin.Infrastructure\AlunosAdmin.Infrastructure.csproj" />
-    </ItemGroup>
-
+    
 </Project>

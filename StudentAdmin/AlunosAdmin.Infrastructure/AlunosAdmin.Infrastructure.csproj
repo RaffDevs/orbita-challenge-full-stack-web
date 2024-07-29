@@ -8,7 +8,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\AlunosAdmin.Core\AlunosAdmin.Core.csproj" />
-      <ProjectReference Include="..\AlunosAdmin.CrossCutting\AlunosAdmin.CrossCutting.csproj" />
     </ItemGroup>
 
     <ItemGroup>
