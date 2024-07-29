@@ -1,0 +1,36 @@
+﻿services:
+  alunosadmin.api:
+    image: alunosadmin.api
+    container_name: alunosadmin.api
+    build:
+      context: .
+      args:
+        MIGRATE: false
+      dockerfile: AlunosAdmin.Api/Dockerfile
+    ports:
+      - "3002:8080"
+    networks:
+      alunosadmin.net
+    environment:
+      DB_SERVER: alunosadmin.db
+      DB_DATABASE: "alunosadmin"
+      DB_USER: "dev"
+      DB_PASSWORD: "yma2578k"
+      DB_PORT: 5432
+      
+  
+  alunosadmin.db:
+    image: postgres
+    container_name: alunosadmin.db
+    environment:
+      POSTGRES_DB: "alunosadmin"
+      POSTGRES_USER: "dev"
+      POSTGRES_PASSWORD: "yma2578k"
+    ports:
+      - "3001:5432"
+    networks:
+      alunosadmin.net
+    
+networks:
+  alunosadmin.net:
+    driver: bridge
