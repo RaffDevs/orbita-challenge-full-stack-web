@@ -1,5 +1,4 @@
 using FluentValidation;
-using StudentAdmin.Application.Commands.CreateStudent;
 using StudentAdmin.Application.Models.InputModels;
 using StudentAdmin.Core.Entities;
 using StudentAdmin.Core.Exceptions;
@@ -53,8 +52,7 @@ public class CreateStudentValidator : AbstractValidator<CreateStudentInputModel>
             .WithMessage("O CPF não pode estar vazio!")
             .Must(CheckCpf)
             .WithMessage("Insira um CPF válido!");
-
-
+        
     }
 
     private bool CheckCpf(string cpf)
