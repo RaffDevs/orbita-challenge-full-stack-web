@@ -1,8 +1,8 @@
 using System.Reflection;
-using AlunosAdmin.Core.Entities;
+using StudentAdmin.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlunosAdmin.Infrastructure.Database;
+namespace StudentAdmin.Infrastructure.Database;
 
 public class StudentAdminDbContext : DbContext
 {

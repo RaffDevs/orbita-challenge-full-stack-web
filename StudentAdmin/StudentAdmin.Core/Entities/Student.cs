@@ -1,4 +1,4 @@
-namespace AlunosAdmin.Core.Entities;
+namespace StudentAdmin.Core.Entities;
 
 public class Student
 {

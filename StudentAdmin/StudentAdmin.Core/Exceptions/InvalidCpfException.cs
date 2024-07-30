@@ -1,4 +1,4 @@
-namespace AlunosAdmin.Core.Exceptions;
+namespace StudentAdmin.Core.Exceptions;
 
 public class InvalidCpfException : Exception
 {

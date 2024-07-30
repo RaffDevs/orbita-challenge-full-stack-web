@@ -4,19 +4,19 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>AlunosAdmin.CrossCutting</RootNamespace>
     </PropertyGroup>
     
     <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
     </ItemGroup>
     
     <ItemGroup>
-      <ProjectReference Include="..\AlunosAdmin.Application\AlunosAdmin.Application.csproj" />
-      <ProjectReference Include="..\AlunosAdmin.Core\AlunosAdmin.Core.csproj" />
-      <ProjectReference Include="..\AlunosAdmin.Infrastructure\AlunosAdmin.Infrastructure.csproj" />
+      <ProjectReference Include="..\StudentAdmin.Application\StudentAdmin.Application.csproj" />
+      <ProjectReference Include="..\StudentAdmin.Core\StudentAdmin.Core.csproj" />
+      <ProjectReference Include="..\StudentAdmin.Infrastructure\StudentAdmin.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

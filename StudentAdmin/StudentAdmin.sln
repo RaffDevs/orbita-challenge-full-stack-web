@@ -1,14 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlunosAdmin.Core", "AlunosAdmin.Core\AlunosAdmin.Core.csproj", "{C1335B8C-DD48-45FD-A6FF-141716677C82}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentAdmin.Core", "StudentAdmin.Core\StudentAdmin.Core.csproj", "{C1335B8C-DD48-45FD-A6FF-141716677C82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlunosAdmin.Infrastructure", "AlunosAdmin.Infrastructure\AlunosAdmin.Infrastructure.csproj", "{85B2C812-4D8F-4AC9-A2A5-B3F15F43D676}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentAdmin.Infrastructure", "StudentAdmin.Infrastructure\StudentAdmin.Infrastructure.csproj", "{85B2C812-4D8F-4AC9-A2A5-B3F15F43D676}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlunosAdmin.CrossCutting", "AlunosAdmin.CrossCutting\AlunosAdmin.CrossCutting.csproj", "{A8C46418-1B9B-4ACA-BEC1-BC30A4C76E5F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentAdmin.CrossCutting", "StudentAdmin.CrossCutting\StudentAdmin.CrossCutting.csproj", "{A8C46418-1B9B-4ACA-BEC1-BC30A4C76E5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlunosAdmin.Application", "AlunosAdmin.Application\AlunosAdmin.Application.csproj", "{BA6A45C3-E22F-4F36-864B-0DDEDFECFA68}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentAdmin.Application", "StudentAdmin.Application\StudentAdmin.Application.csproj", "{BA6A45C3-E22F-4F36-864B-0DDEDFECFA68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlunosAdmin.Api", "AlunosAdmin.Api\AlunosAdmin.Api.csproj", "{ED4A96D1-67C7-4DFC-91F8-6C4CC27C91D3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentAdmin.Api", "StudentAdmin.Api\StudentAdmin.Api.csproj", "{ED4A96D1-67C7-4DFC-91F8-6C4CC27C91D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

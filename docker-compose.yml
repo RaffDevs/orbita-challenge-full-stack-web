@@ -6,9 +6,11 @@
       context: .
       args:
         MIGRATE: false
-      dockerfile: AlunosAdmin.Api/Dockerfile
+      dockerfile: StudentAdmin/StudentAdmin.Api/Dockerfile
     ports:
       - "3002:8080"
+    depends_on:
+      - alunosadmin.db
     networks:
       - alunosadmin.net
     environment:
