@@ -1,8 +1,8 @@
-using AlunosAdmin.Core.Entities;
+using StudentAdmin.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AlunosAdmin.Infrastructure.Database.Configuration;
+namespace StudentAdmin.Infrastructure.Database.Configuration;
 
 public class StudentConfiguration : IEntityTypeConfiguration<Student>
 {

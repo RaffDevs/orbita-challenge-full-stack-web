@@ -1,6 +1,6 @@
-using AlunosAdmin.Core.Entities;
+using StudentAdmin.Core.Entities;
 
-namespace AlunosAdmin.Core.Repositories;
+namespace StudentAdmin.Core.Repositories;
 
 public interface IStudentRepository
 {

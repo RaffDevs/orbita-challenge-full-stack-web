@@ -1,4 +1,4 @@
-namespace AlunosAdmin.Api;
+namespace StudentAdmin.Api;
 
 public class WeatherForecast
 {
