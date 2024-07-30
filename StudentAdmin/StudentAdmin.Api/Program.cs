@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDatabaseContext(builder.Configuration);
 builder.Services.AddServices();
 builder.Services.AddMediator();
+builder.Services.AddFluentValidator();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
