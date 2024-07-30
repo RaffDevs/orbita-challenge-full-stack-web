@@ -51,7 +51,7 @@ public class Student
             sum2 += int.Parse(cpf[i].ToString()) * multipliers2[i];
         }
 
-        var leftovers2 = (sum2 & 11);
+        var leftovers2 = (sum2 % 11);
         var secondDigit = leftovers2 < 2 ? 0 : 11 - leftovers2;
 
         if (int.Parse(cpf[10].ToString()) != secondDigit)

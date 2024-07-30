@@ -66,5 +66,9 @@ public class CreateStudentValidator : AbstractValidator<CreateStudentInputModel>
         {
             return false;
         }
+        catch (Exception ex)
+        {
+            return false;
+        } 
     }
 }

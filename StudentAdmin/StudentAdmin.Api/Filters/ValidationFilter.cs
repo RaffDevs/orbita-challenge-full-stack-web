@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace StudentAdmin.Api.Filters;
@@ -12,6 +13,8 @@ public class ValidationFilter : IActionFilter
                 .SelectMany(msg => msg.Value.Errors)
                 .Select(e => e.ErrorMessage)
                 .ToList();
+
+            context.Result = new BadRequestObjectResult(messages);
         }
     }
 
