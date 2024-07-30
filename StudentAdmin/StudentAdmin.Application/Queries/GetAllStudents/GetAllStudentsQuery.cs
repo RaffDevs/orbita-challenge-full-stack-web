@@ -8,8 +8,8 @@ public class GetAllStudentsQuery : IRequest<List<StudentViewModel>>
 {
     public string? Query { get; private set; }
 
-    public GetAllStudentsQuery(string query)
+    public GetAllStudentsQuery(string? query)
     {
-        Query = query.ToLower();
+        Query = query?.ToLower();
     }
 }
