@@ -1,12 +1,23 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using StudentAdmin.Application.Commands.CreateStudent;
+using StudentAdmin.Core.Repositories;
 using StudentAdmin.Infrastructure.Database;
+using StudentAdmin.Infrastructure.Repositories;
 
 namespace AlunosAdmin.CrossCutting.IoC;
 
 public static class DependencyInjection
 {
+
+    public static IServiceCollection AddServices(this IServiceCollection services)
+    {
+        services.AddScoped<IStudentRepository, StudentRepository>();
+
+        return services;
+    }
+    
     public static IServiceCollection AddDatabaseContext(this IServiceCollection services, IConfiguration config)
     {
         string? server = Environment.GetEnvironmentVariable("DB_SERVER") ??
@@ -19,7 +30,7 @@ public static class DependencyInjection
                        config.GetSection("DatabaseDefaultParams")["DB_USER"];
         string? password = Environment.GetEnvironmentVariable("DB_PASSWORD") ??
                            config.GetSection("DatabaseDefaultParams")["DB_PASSWORD"];
-        
+
         string connectionString = $"Host={server};" +
                                   $"Port={port};" +
                                   $"Pooling=true;" +
@@ -27,11 +38,16 @@ public static class DependencyInjection
                                   $"User Id={user};" +
                                   $"Password={password};";
 
-        services.AddDbContext<StudentAdminDbContext>(options =>
-        {
-            options.UseNpgsql(connectionString);
-        });
+        services.AddDbContext<StudentAdminDbContext>(options => { options.UseNpgsql(connectionString); });
 
+        return services;
+    }
+
+    public static IServiceCollection AddMediator(this IServiceCollection services)
+    {
+        services.AddMediatR(
+            config => config.RegisterServicesFromAssembly(typeof(CreateStudentCommand).Assembly)
+        );
         return services;
     }
 }
