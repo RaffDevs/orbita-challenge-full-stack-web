@@ -5,5 +5,18 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\AlunosAdmin.Application\AlunosAdmin.Application.csproj" />
+      <ProjectReference Include="..\AlunosAdmin.Core\AlunosAdmin.Core.csproj" />
+      <ProjectReference Include="..\AlunosAdmin.Infrastructure\AlunosAdmin.Infrastructure.csproj" />
+    </ItemGroup>
 
 </Project>
