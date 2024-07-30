@@ -1,7 +1,10 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using StudentAdmin.Application.Commands.CreateStudent;
+using StudentAdmin.Application.Validations;
 using StudentAdmin.Core.Repositories;
 using StudentAdmin.Infrastructure.Database;
 using StudentAdmin.Infrastructure.Repositories;
@@ -48,6 +51,15 @@ public static class DependencyInjection
         services.AddMediatR(
             config => config.RegisterServicesFromAssembly(typeof(CreateStudentCommand).Assembly)
         );
+        return services;
+    }
+
+    public static IServiceCollection AddFluentValidator(this IServiceCollection services)
+    {
+        services.AddFluentValidationAutoValidation();
+        services.AddFluentValidationClientsideAdapters();
+        services.AddValidatorsFromAssemblyContaining<CreateStudentValidator>();
+
         return services;
     }
 }
