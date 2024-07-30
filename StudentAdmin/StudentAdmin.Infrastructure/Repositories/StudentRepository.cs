@@ -14,17 +14,28 @@ public class StudentRepository : IStudentRepository
         _context = context;
     }
 
-    public async Task<Student?> GetById(int id)
+    public async Task<Student?> GetById(string id)
     {
         var student = await _context.Students.FindAsync(id);
         return student;
-
     }
 
-    public async Task<List<Student>> GetAll()
+    public async Task<List<Student>> GetAll(string? query)
     {
-        var students = await _context.Students.ToListAsync();
-        return students;
+        IQueryable<Student> students = _context.Students;
+        
+        if (!string.IsNullOrEmpty(query))
+        {
+            students = students
+                .Where(s =>
+                    s.FullName.Contains(query) ||
+                    s.Email.Contains(query) ||
+                    s.Cpf.Contains(query) ||
+                    s.Ra.Contains(query)
+                );
+        }
+
+        return await students.ToListAsync();
     }
 
     public async Task<Student> Create(Student student)
