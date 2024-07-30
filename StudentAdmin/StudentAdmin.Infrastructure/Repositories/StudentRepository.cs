@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using StudentAdmin.Core.Entities;
 using StudentAdmin.Core.Repositories;
 using StudentAdmin.Infrastructure.Database;
@@ -13,14 +14,17 @@ public class StudentRepository : IStudentRepository
         _context = context;
     }
 
-    public Task<Student> GetById(int id)
+    public async Task<Student?> GetById(int id)
     {
-        throw new NotImplementedException();
+        var student = await _context.Students.FindAsync(id);
+        return student;
+
     }
 
-    public Task<List<Student>> GetAll()
+    public async Task<List<Student>> GetAll()
     {
-        throw new NotImplementedException();
+        var students = await _context.Students.ToListAsync();
+        return students;
     }
 
     public async Task<Student> Create(Student student)
