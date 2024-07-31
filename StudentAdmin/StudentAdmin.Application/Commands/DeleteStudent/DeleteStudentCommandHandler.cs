@@ -15,13 +15,13 @@ public class DeleteStudentCommandHandler : IRequestHandler<DeleteStudentCommand>
 
     public async Task Handle(DeleteStudentCommand request, CancellationToken cancellationToken)
     {
-        var student = await _repository.GetById(request.Id);
+        var student = await _repository.GetByIdAsync(request.Id);
 
         if (student is null)
         {
             throw new NotFoundStudentException();
         }
 
-        await _repository.Delete(student);
+        await _repository.DeleteAsync(student);
     }
 }

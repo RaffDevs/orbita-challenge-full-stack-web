@@ -15,7 +15,7 @@ public class UpdateStudentCommandHandler : IRequestHandler<UpdateStudentCommand>
 
     public async Task Handle(UpdateStudentCommand request, CancellationToken cancellationToken)
     {
-        var student = await _repository.GetById(request.Id);
+        var student = await _repository.GetByIdAsync(request.Id);
         if (student is null)
         {
             throw new NotFoundStudentException();
@@ -24,6 +24,6 @@ public class UpdateStudentCommandHandler : IRequestHandler<UpdateStudentCommand>
         var fullName = string.Concat(request.Model.FirstName, " ", request.Model.LastName);
         student.Update(fullName, request.Model.Email, request.Model.IsActive);
 
-        await _repository.Update(student);
+        await _repository.UpdateAsync(student);
     }
 }

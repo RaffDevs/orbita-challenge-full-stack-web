@@ -17,7 +17,7 @@ public class GetStudentByIdQueryHandler : IRequestHandler<GetStudentByIdQuery, S
 
     public async Task<StudentDetailsViewModel> Handle(GetStudentByIdQuery request, CancellationToken cancellationToken)
     {
-        var student = await _repository.GetById(request.Ra);
+        var student = await _repository.GetByIdAsync(request.Ra);
 
         if (student is null)
         {
