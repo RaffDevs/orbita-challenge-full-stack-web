@@ -1,4 +1,5 @@
 using MediatR;
+using StudentAdmin.Application.Exceptions;
 using StudentAdmin.Application.Models.Mappers;
 using StudentAdmin.Application.Models.ViewModels;
 using StudentAdmin.Core.Repositories;
@@ -20,7 +21,7 @@ public class GetStudentByIdQueryHandler : IRequestHandler<GetStudentByIdQuery, S
 
         if (student is null)
         {
-            throw new NotImplementedException();
+            throw new NotFoundStudentException();
         }
 
         var studentViewModelDetails = StudentMapper.MapToStudentDetailViewModel(student);
