@@ -26,4 +26,4 @@ FROM base AS final
 ENV RUN_MIGRATE=${MIGRATE}
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "StudentAdmin.Api.dll"]
+ENTRYPOINT ["sh", "-c", "sleep 2 && dotnet StudentAdmin.Api.dll"]

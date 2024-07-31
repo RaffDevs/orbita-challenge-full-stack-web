@@ -51,8 +51,9 @@ public class StudentRepository : IStudentRepository
         await _context.SaveChangesAsync();
     }
 
-    public Task Delete(Student student)
+    public async Task Delete(Student student)
     {
-        throw new NotImplementedException();
+        _context.Students.Remove(student);
+        await _context.SaveChangesAsync();
     }
 }

@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using StudentAdmin.Core.Exceptions;
 
 namespace StudentAdmin.Core.Entities;
@@ -8,6 +9,7 @@ public class Student
     public string FullName { get; private set; }
     public string Email { get; private set; }
     public string Cpf { get; private set; }
+    public bool IsActive { get; private set; }
 
     public Student(string ra, string fullName, string email, string cpf)
     {
@@ -15,13 +17,32 @@ public class Student
         FullName = fullName;
         Email = email;
         Cpf = cpf;
+        IsActive = true;
     }
 
-    public void SetFullName(string fullName) => FullName = fullName;
-    public void SetEmail(string email) => Email = email;
+    public void Update(string fullName, string email, bool isActive)
+    {
+        FullName = fullName;
+        Email = email;
+        IsActive = isActive;
+    }
+    
+    private static string FormatCpf(string cpf)
+    {
+        try
+        {
+            return Regex.Replace(cpf, @"\D", "");
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidCpfException();
+        }
+    }
 
     public static string ValidateCpf(string cpf)
     {
+        cpf = FormatCpf(cpf);
+        
         if (new string(cpf[0], 11) == cpf)
         {
             throw new InvalidCpfException();
@@ -60,7 +81,8 @@ public class Student
         }
 
         return cpf;
-
     }
+
+    
     
 }
