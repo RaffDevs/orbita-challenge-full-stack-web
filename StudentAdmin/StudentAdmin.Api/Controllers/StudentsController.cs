@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using StudentAdmin.Application.Commands.CreateStudent;
+using StudentAdmin.Application.Commands.UpdateStudent;
 using StudentAdmin.Application.Exceptions;
 using StudentAdmin.Application.Models.InputModels;
 using StudentAdmin.Application.Queries.GetAllStudents;
@@ -19,7 +20,7 @@ public class StudentsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] CreateStudentInputModel data)
+    public async Task<IActionResult> Create([FromBody] CreateStudentInputModel data)
     {
         try
         {
@@ -62,5 +63,21 @@ public class StudentsController : ControllerBase
         {
             throw new UnexpectedExpcetion(ex.Message);
         }
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(string id, [FromBody] UpdateStudentInputModel data)
+    {
+        try
+        {
+            var command = new UpdateStudentCommand(id, data);
+            await _mediator.Send(command);
+            return NoContent();
+        }
+        catch (Exception ex) when (ex is not NotFoundStudentException)
+        {
+            throw new UnexpectedExpcetion(ex.Message);
+        }
+        
     }
 }
