@@ -37,7 +37,7 @@ public static class DependencyInjection
         string connectionString = $"Host={server};" +
                                   $"Port={port};" +
                                   $"Pooling=true;" +
-                                  $"Database={database};" +
+                                  $"Database={database};" + 
                                   $"User Id={user};" +
                                   $"Password={password};";
 
