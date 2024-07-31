@@ -76,8 +76,7 @@ public class StudentsController : ControllerBase
         }
         catch (Exception ex) when (ex is not NotFoundStudentException)
         {
-            throw new UnexpectedExpcetion(ex.Message);
+            throw new UnexpectedExpcetion(ex.InnerException.Message);
         }
-        
     }
 }

@@ -12,5 +12,8 @@ public class StudentConfiguration : IEntityTypeConfiguration<Student>
         builder
             .HasIndex(o => o.Email)
             .IsUnique();
+        builder
+            .HasIndex(s => s.Cpf)
+            .IsUnique();
     }
 }
