@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using StudentAdmin.Core.Exceptions;
 
 namespace StudentAdmin.Core.Entities;
@@ -22,9 +23,23 @@ public class Student
         FullName = fullName;
         Email = email;
     }
+    
+    private static string FormatCpf(string cpf)
+    {
+        try
+        {
+            return Regex.Replace(cpf, @"\D", "");
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidCpfException();
+        }
+    }
 
     public static string ValidateCpf(string cpf)
     {
+        cpf = FormatCpf(cpf);
+        
         if (new string(cpf[0], 11) == cpf)
         {
             throw new InvalidCpfException();
@@ -63,7 +78,8 @@ public class Student
         }
 
         return cpf;
-
     }
+
+    
     
 }

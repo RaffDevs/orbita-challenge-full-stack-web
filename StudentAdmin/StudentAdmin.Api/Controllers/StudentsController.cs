@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using StudentAdmin.Application.Commands.CreateStudent;
+using StudentAdmin.Application.Commands.DeleteStudent;
 using StudentAdmin.Application.Commands.UpdateStudent;
 using StudentAdmin.Application.Exceptions;
 using StudentAdmin.Application.Models.InputModels;
@@ -77,6 +78,21 @@ public class StudentsController : ControllerBase
         catch (Exception ex) when (ex is not NotFoundStudentException)
         {
             throw new UnexpectedExpcetion(ex.InnerException.Message);
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(string id)
+    {
+        try
+        {
+            var command = new DeleteStudentCommand(id);
+            await _mediator.Send(command);
+            return NoContent();
+        }
+        catch (Exception ex) when (ex is not NotFoundStudentException)
+        {
+            throw new UnexpectedExpcetion(ex.Message);
         }
     }
 }
