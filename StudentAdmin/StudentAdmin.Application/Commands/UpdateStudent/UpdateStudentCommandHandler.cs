@@ -22,8 +22,7 @@ public class UpdateStudentCommandHandler : IRequestHandler<UpdateStudentCommand>
         }
 
         var fullName = string.Concat(request.Model.FirstName, " ", request.Model.LastName);
-        student.SetFullName(fullName);
-        student.SetEmail(request.Model.Email);
+        student.Update(fullName, request.Model.Email);
 
         await _repository.Update(student);
     }

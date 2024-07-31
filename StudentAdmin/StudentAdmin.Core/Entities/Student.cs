@@ -17,8 +17,11 @@ public class Student
         Cpf = cpf;
     }
 
-    public void SetFullName(string fullName) => FullName = fullName;
-    public void SetEmail(string email) => Email = email;
+    public void Update(string fullName, string email)
+    {
+        FullName = fullName;
+        Email = email;
+    }
 
     public static string ValidateCpf(string cpf)
     {
