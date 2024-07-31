@@ -21,7 +21,8 @@ public static class StudentMapper
     {
         return new StudentViewModel(
             data.FullName,
-            data.Ra
+            data.Ra,
+            data.IsActive
         );
     }
 
@@ -31,7 +32,8 @@ public static class StudentMapper
             data.Ra,
             data.FullName,
             data.Email,
-            data.Cpf
+            data.Cpf,
+            data.IsActive
         );
     }
 }

@@ -9,6 +9,7 @@ public class Student
     public string FullName { get; private set; }
     public string Email { get; private set; }
     public string Cpf { get; private set; }
+    public bool IsActive { get; private set; }
 
     public Student(string ra, string fullName, string email, string cpf)
     {
@@ -16,12 +17,14 @@ public class Student
         FullName = fullName;
         Email = email;
         Cpf = cpf;
+        IsActive = true;
     }
 
-    public void Update(string fullName, string email)
+    public void Update(string fullName, string email, bool isActive)
     {
         FullName = fullName;
         Email = email;
+        IsActive = isActive;
     }
     
     private static string FormatCpf(string cpf)
