@@ -45,9 +45,10 @@ public class StudentRepository : IStudentRepository
         return result.Entity;
     }
 
-    public Task Update(Student student)
+    public async Task Update(Student student)
     {
-        throw new NotImplementedException();
+        _context.Students.Update(student);
+        await _context.SaveChangesAsync();
     }
 
     public Task Delete(Student student)
