@@ -8,8 +8,8 @@
     >
       <DrawerComponent/>
     </v-navigation-drawer>
-    <v-app-bar app elevation="0" clipped-left>
-      <v-toolbar-title>Student Admin</v-toolbar-title>
+    <v-app-bar app elevation="0" clipped-left color="primary" dark>
+      <v-toolbar-title >Student Admin</v-toolbar-title>
     </v-app-bar>
     <v-main>
       <MainPage/>
