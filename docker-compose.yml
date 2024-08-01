@@ -32,6 +32,16 @@
       - "3001:5432"
     networks:
       - alunosadmin.net
+
+  alunosadmin.web:
+    container_name: alunosadmin.web
+    build:
+      context: ./student_admin_web
+      dockerfile: Dockerfile
+    ports:
+      - "3003:80"
+    networks:
+      - alunosadmin.net
     
 networks:
   alunosadmin.net:
