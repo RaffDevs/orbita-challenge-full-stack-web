@@ -9,7 +9,7 @@ namespace StudentAdmin.UnitTests.Application.Queries;
 public class GetStudentByIdQueryHandlerTest
 {
     [Fact]
-    public async Task ExistsOneStudentWithId_GetById_ReturnStudentWithSameId()
+    public async Task ExistsOneStudentWithId_GetStudentByIdQuery_ReturnStudentWithSameId()
     {
         // Arrange
         var student = new Student("123345456", "Rafael Veronez", "teste@mail.com", "317.723.630-57");

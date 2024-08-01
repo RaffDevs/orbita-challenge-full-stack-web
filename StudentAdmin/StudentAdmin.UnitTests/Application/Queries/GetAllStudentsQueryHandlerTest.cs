@@ -9,7 +9,7 @@ namespace StudentAdmin.UnitTests.Application.Queries;
 public class GetAllStudentsQueryHandlerTest
 {
     [Fact]
-    public async Task ExistsTwoStudents_GetAll_ReturnTwoStudentViewModels()
+    public async Task ExistsTwoStudents_GetAllStudentQuery_ReturnTwoStudentViewModels()
     {
         // Arrange
         var students = new List<Student>
