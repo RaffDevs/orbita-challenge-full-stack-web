@@ -33,24 +33,5 @@ public class GetAllStudentsQueryHandlerTest
         Assert.Equal(students.Count, studentViewModelList.Count);
     }
     
-    [Fact]
-    public async Task ExistsTwoStudentWithId_GetById_ReturnStudentWithSameId()
-    {
-        // Arrange
-        var student = new Student("123345456", "Rafael Veronez", "teste@mail.com", "317.723.630-57");
-        
-        var studentRepositoryMock = new Mock<IStudentRepository>();
-        var studentId = "317.723.630-57";
-        studentRepositoryMock.Setup(st => st.GetByIdAsync(studentId).Result)
-            .Returns(student);
-        var query = new GetStudentByIdQuery(studentId);
-        var getStudentByIdQueryHandler = new GetStudentByIdQueryHandler(studentRepositoryMock.Object);
-
-        // Act
-        var studentViewModel = await getStudentByIdQueryHandler.Handle(query, new CancellationToken());
-        
-        // Assert
-        Assert.NotNull(studentViewModel);
-        Assert.Equal(student.Cpf, studentViewModel.Cpf);
-    }
+    
 }
