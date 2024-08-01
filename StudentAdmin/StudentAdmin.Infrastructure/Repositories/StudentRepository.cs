@@ -28,8 +28,8 @@ public class StudentRepository : IStudentRepository
         {
             students = students
                 .Where(s =>
-                    s.FullName.Contains(query) ||
-                    s.Email.Contains(query) ||
+                    s.FullName.ToLower().Contains(query) ||
+                    s.Email.ToLower().Contains(query) ||
                     s.Cpf.Contains(query) ||
                     s.Ra.Contains(query)
                 );
