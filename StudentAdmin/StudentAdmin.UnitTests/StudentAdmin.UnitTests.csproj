@@ -22,12 +22,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Application\Commands\" />
+      <ProjectReference Include="..\StudentAdmin.Application\StudentAdmin.Application.csproj" />
+      <ProjectReference Include="..\StudentAdmin.Core\StudentAdmin.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\StudentAdmin.Application\StudentAdmin.Application.csproj" />
-      <ProjectReference Include="..\StudentAdmin.Core\StudentAdmin.Core.csproj" />
+      <Folder Include="Application\Commands\" />
     </ItemGroup>
 
 </Project>

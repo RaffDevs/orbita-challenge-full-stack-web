@@ -1,5 +1,6 @@
 using Moq;
 using StudentAdmin.Application.Queries.GetAllStudents;
+using StudentAdmin.Application.Queries.GetStudentById;
 using StudentAdmin.Core.Entities;
 using StudentAdmin.Core.Repositories;
 
@@ -31,4 +32,6 @@ public class GetAllStudentsQueryHandlerTest
         Assert.NotEmpty(studentViewModelList);
         Assert.Equal(students.Count, studentViewModelList.Count);
     }
+    
+    
 }
