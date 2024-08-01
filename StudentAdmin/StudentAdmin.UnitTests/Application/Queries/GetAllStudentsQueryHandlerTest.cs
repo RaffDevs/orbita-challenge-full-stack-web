@@ -31,6 +31,7 @@ public class GetAllStudentsQueryHandlerTest
         Assert.NotNull(studentViewModelList);
         Assert.NotEmpty(studentViewModelList);
         Assert.Equal(students.Count, studentViewModelList.Count);
+        studentRepositoryMock.Verify(st => st.GetAllAsync(null).Result, Times.Once);
     }
     
     

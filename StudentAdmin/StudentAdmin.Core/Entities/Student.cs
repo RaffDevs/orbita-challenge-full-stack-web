@@ -16,7 +16,7 @@ public class Student
         Ra = ra;
         FullName = fullName;
         Email = email;
-        Cpf = ValidateCpf(cpf);
+        Cpf = cpf;
         IsActive = true;
     }
 

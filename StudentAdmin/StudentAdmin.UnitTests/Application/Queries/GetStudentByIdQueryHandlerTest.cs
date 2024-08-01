@@ -27,6 +27,8 @@ public class GetStudentByIdQueryHandlerTest
 
         // Assert
         Assert.Equal(new NotFoundStudentException().Message, exception.Message);
+        studentRepositoryMock.Verify(st => st.GetByIdAsync(studentId).Result, Times.Once);
+
     }
 
     [Fact]
@@ -48,5 +50,6 @@ public class GetStudentByIdQueryHandlerTest
         // Assert
         Assert.NotNull(studentViewModel);
         Assert.Equal(student.Cpf, studentViewModel.Cpf);
+        studentRepositoryMock.Verify(st => st.GetByIdAsync(studentId).Result, Times.Once);
     }
 }
