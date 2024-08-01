@@ -17,7 +17,7 @@ public class GetAllStudentsQueryHandler : IRequestHandler<GetAllStudentsQuery, L
 
     public async Task<List<StudentViewModel>> Handle(GetAllStudentsQuery request, CancellationToken cancellationToken)
     {
-        var students = await _repository.GetAll(request.Query);
+        var students = await _repository.GetAllAsync(request.Query);
         var studentsViewModel = students
             .Select(StudentMapper.MapToStudentViewModel)
             .ToList();

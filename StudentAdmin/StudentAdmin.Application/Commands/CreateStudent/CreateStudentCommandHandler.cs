@@ -17,7 +17,7 @@ public class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand,
     public async Task<string> Handle(CreateStudentCommand request, CancellationToken cancellationToken)
     {
         var student = StudentMapper.MapToStudent(request.Model);
-        var result = await _repository.Create(student);
+        var result = await _repository.CreateAsync(student);
 
         return result.Ra;
     }

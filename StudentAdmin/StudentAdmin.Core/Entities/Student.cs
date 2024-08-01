@@ -16,7 +16,7 @@ public class Student
         Ra = ra;
         FullName = fullName;
         Email = email;
-        Cpf = cpf;
+        Cpf = ValidateCpf(cpf);
         IsActive = true;
     }
 
@@ -27,7 +27,7 @@ public class Student
         IsActive = isActive;
     }
     
-    private static string FormatCpf(string cpf)
+    public static string FormatCpf(string cpf)
     {
         try
         {

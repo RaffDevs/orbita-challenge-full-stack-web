@@ -4,9 +4,9 @@ namespace StudentAdmin.Core.Repositories;
 
 public interface IStudentRepository
 {
-    Task<Student?> GetById(string id);
-    Task<List<Student>> GetAll(string? query);
-    Task<Student> Create(Student student);
-    Task Update(Student student);
-    Task Delete(Student student);
+    Task<Student?> GetByIdAsync(string id);
+    Task<List<Student>> GetAllAsync(string? query);
+    Task<Student> CreateAsync(Student student);
+    Task UpdateAsync(Student student);
+    Task DeleteAsync(Student student);
 }

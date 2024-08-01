@@ -14,13 +14,13 @@ public class StudentRepository : IStudentRepository
         _context = context;
     }
 
-    public async Task<Student?> GetById(string id)
+    public async Task<Student?> GetByIdAsync(string id)
     {
         var student = await _context.Students.FindAsync(id);
         return student;
     }
 
-    public async Task<List<Student>> GetAll(string? query)
+    public async Task<List<Student>> GetAllAsync(string? query)
     {
         IQueryable<Student> students = _context.Students;
         
@@ -38,20 +38,20 @@ public class StudentRepository : IStudentRepository
         return await students.ToListAsync();
     }
 
-    public async Task<Student> Create(Student student)
+    public async Task<Student> CreateAsync(Student student)
     {
         var result = _context.Students.Add(student);
         await _context.SaveChangesAsync();
         return result.Entity;
     }
 
-    public async Task Update(Student student)
+    public async Task UpdateAsync(Student student)
     {
         _context.Students.Update(student);
         await _context.SaveChangesAsync();
     }
 
-    public async Task Delete(Student student)
+    public async Task DeleteAsync(Student student)
     {
         _context.Students.Remove(student);
         await _context.SaveChangesAsync();
