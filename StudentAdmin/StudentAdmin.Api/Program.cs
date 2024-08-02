@@ -11,6 +11,16 @@ builder.Services.AddServices();
 builder.Services.AddMediator();
 builder.Services.AddFluentValidator();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("DockerCluster",
+        builder => builder
+            .WithOrigins("http://localhost:3003")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+    );
+});
+
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add(typeof(ValidationFilter));
@@ -36,7 +46,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
-
+app.UseCors("DockerCluster");
 app.UseAuthorization();
 
 app.MapControllers();
