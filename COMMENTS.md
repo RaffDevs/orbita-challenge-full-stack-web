@@ -1,3 +1,13 @@
+## Prints
+<img src="https://github.com/user-attachments/assets/577b3e34-315a-4dc0-aa49-f13b4fd136d6" alt="Descrição da Imagem" width="600"/>
+<img src="https://github.com/user-attachments/assets/d5eaead8-9b83-4aee-ae9c-daf4d838ad7d" alt="Descrição da Imagem" width="600"/>
+
+<img src="https://github.com/user-attachments/assets/ce0d98cf-5b88-4acf-b6ea-9201073fb977" alt="Descrição da Imagem" width="600"/>
+
+<img src="https://github.com/user-attachments/assets/cc0a33d5-992a-4b6f-bc3c-a2129865e7c7" alt="Descrição da Imagem" width="600"/>
+<img src="https://github.com/user-attachments/assets/20147727-bf36-44a4-9dc5-e238ee49ba5a" alt="Descrição da Imagem" width="600"/>
+
+
 ## Resolução
 
 ### Arquitetura e Padrões Utilizados
