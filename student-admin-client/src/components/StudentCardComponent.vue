@@ -1,8 +1,8 @@
 <template>
-  <v-card :class="{'student-card': true, 'inactive': !student.active}" max-width="400px">
-    <v-card-title>{{ student.name }}</v-card-title>
+  <v-card :class="{'student-card': true, 'inactive': !student.isActive}" max-width="400px">
+    <v-card-title>{{ student.fullName }}</v-card-title>
     <v-card-subtitle>RA: {{ student.ra }}</v-card-subtitle>
-    <v-card-text>Status: {{ student.active ? 'Ativo' : 'Inativo' }}</v-card-text>
+    <v-card-text>Status: {{ student.isActive ? 'Ativo' : 'Inativo' }}</v-card-text>
     <v-card-actions>
       <v-btn icon @click="showDetails" color="primary">
         <v-icon>mdi-eye-outline</v-icon>
@@ -23,10 +23,11 @@ export default {
   },
   methods: {
     showDetails() {
+      console.log(this.student)
       this.$emit('show-details', this.student);
     },
     requestDelete() {
-      this.$emit('request-delete', this.index);
+      this.$emit('request-delete', this.student);
     },
   },
 }

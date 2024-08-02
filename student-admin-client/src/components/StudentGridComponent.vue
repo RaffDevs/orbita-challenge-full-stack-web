@@ -1,22 +1,29 @@
 <template>
   <v-container>
-    <v-text-field
-        v-model="search"
-        label="Buscar Aluno"
-        append-icon="mdi-magnify"
-        class="mb-4"
-    />
+    <v-row>
+      <v-col cols="9">
+        <v-text-field
+            v-model="search"
+            label="Buscar Aluno"
+            append-icon="mdi-magnify"
+            class="mb-4"
+        />
+      </v-col>
+      <v-col cols="3">
+        <v-btn @click="getStudents">
+          Procurar
+        </v-btn>
+      </v-col>
+    </v-row>
 
-    <!-- Toolbar com abas -->
     <v-tabs v-model="tab" centered>
       <v-tab>Ativos</v-tab>
       <v-tab>Inativos</v-tab>
     </v-tabs>
 
-    <!-- Conteúdo das abas -->
     <v-tabs-items v-model="tab" class="mt-3">
       <v-tab-item class="ma-3">
-        <v-row v-if="filteredActiveStudents.length === 0">
+        <v-row v-if="students.length === 0">
           <v-col cols="12">
             <v-alert type="info" border="left" colored-border>
               Nenhum aluno ativo cadastrado.
@@ -56,7 +63,7 @@
       </v-tab-item>
     </v-tabs-items>
 
-    <!-- Dialog para Cadastrar Novo Aluno -->
+    <!-- Dialog: Cadastrar aluno -->
     <v-dialog v-model="dialog" max-width="500px" @click:outside="closeDialog">
       <v-card>
         <v-card-title>
@@ -64,9 +71,31 @@
         </v-card-title>
         <v-card-text>
           <v-form>
-            <v-text-field v-model="newStudent" label="Nome" />
-            <v-text-field v-model="newStudent" label="RA" />
-            <v-switch v-model="newStudent" label="Ativo" />
+            <v-text-field
+                v-model="newStudent.ra"
+                label="RA"
+                :rules="raRules"
+            />
+            <v-text-field
+                v-model="newStudent.firstName"
+                label="Nome"
+                :rules="nameRules"
+            />
+            <v-text-field
+                v-model="newStudent.lastName"
+                label="Sobrenome"
+                :rules="nameRules"
+            />
+            <v-text-field
+                v-model="newStudent.email"
+                label="Email"
+                :rules="emailRules"
+            />
+            <v-text-field
+                v-model="newStudent.cpf"
+                label="CPF"
+                :rules="cpfRules"
+            />
           </v-form>
         </v-card-text>
         <v-card-actions>
@@ -76,11 +105,11 @@
       </v-card>
     </v-dialog>
 
-    <!-- Dialog de confirmação de exclusão -->
+    <!-- Dialog: confirma exclusão -->
     <v-dialog v-model="deleteDialog" max-width="290">
       <v-card>
         <v-card-title class="headline">Confirmar Exclusão</v-card-title>
-        <v-card-text>Tem certeza de que deseja excluir o aluno "{{ studentToDelete }}"?</v-card-text>
+        <v-card-text>Tem certeza de que deseja excluir o aluno "{{ studentToDelete?.fullName }}"?</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="grey" @click="cancelDelete">Cancelar</v-btn>
@@ -89,7 +118,7 @@
       </v-card>
     </v-dialog>
 
-    <!-- Dialog para Mostrar e Editar Detalhes do Aluno -->
+    <!-- Dialog: Mostrar detalhrs -->
     <v-dialog v-model="detailsDialog" max-width="500px">
       <v-card>
         <v-card-title>
@@ -98,17 +127,34 @@
         <v-card-text>
           <v-form ref="detailsForm">
             <v-text-field
-                v-model="selectedStudent"
+                v-model="studentDetails.ra"
+                label="RA"
+                disabled
+            />
+            <v-text-field
+                v-model="studentDetails.cpf"
+                label="RA"
+                disabled
+            />
+
+            <v-text-field
+                v-model="studentDetails.firstName"
                 label="Nome"
                 :disabled="!isEditing"
             />
             <v-text-field
-                v-model="selectedStudent"
-                label="RA"
+                v-model="studentDetails.lastName"
+                label="Sobrenome"
                 :disabled="!isEditing"
             />
+            <v-text-field
+                v-model="studentDetails.email"
+                label="Email"
+                :disabled="!isEditing"
+            />
+
             <v-switch
-                v-model="selectedStudent"
+                v-model="studentDetails.active"
                 label="Ativo"
                 :disabled="!isEditing"
             />
@@ -118,22 +164,24 @@
           <v-btn
               text
               @click="closeDetailsDialog"
-          >Fechar</v-btn>
+          >Fechar
+          </v-btn>
           <v-btn
               color="primary"
               v-if="!isEditing"
               @click="enableEditing"
-          >Editar</v-btn>
+          >Editar
+          </v-btn>
           <v-btn
               color="primary"
               v-if="isEditing"
               @click="saveDetails"
-          >Salvar</v-btn>
+          >Salvar
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
-    <!-- Floating Action Button -->
     <v-btn
         fab
         bottom
@@ -145,16 +193,24 @@
     >
       <v-icon>mdi-plus</v-icon>
     </v-btn>
+    <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="3000">
+      {{ snackbar.message }}
+      <v-btn color="white" text @click="snackbar.show = false">Fechar</v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
 <script>
 import StudentCard from './StudentCardComponent.vue';
+import { getStudents, getStudentById, updateStudent, createStudent, deleteStudent} from '@/api/request';
 
 export default {
   name: 'StudentGrid',
   components: {
     StudentCard,
+  },
+  created() {
+    this.getStudents()
   },
   data() {
     return {
@@ -162,108 +218,153 @@ export default {
       deleteDialog: false,
       detailsDialog: false,
       studentToDelete: null,
-      selectedStudent: null,
+      studentDetails: {
+        firstName: "",
+        lastName: "",
+        ra: "",
+        email: "",
+        cpf: "",
+        active: false
+      },
       isEditing: false,
       tab: 0,
       search: '',
       newStudent: {
-        name: '',
-        ra: '',
-        active: false,
+        firstName: "",
+        lastName: "",
+        ra: "",
+        email: "",
+        cpf: "",
       },
-      students: [
-        { name: 'João Silva', ra: '12345f', active: true },
-        { name: 'Maria Oliveira', ra: '678v90', active: false },
-        { name: 'João Silva', ra: '12qwe345', active: true },
-        { name: 'Maria Oliveira', ra: '6789vb0', active: false },
-        {name: 'João Silva', ra: '123yukj45', active: true},
-        {name: 'Maria Oliveira', ra: '67casc890', active: false},
-        { name: 'João Silva', ra: '123cz45', active: true },
-        { name: 'Maria Oliveira', ra: '67jyt890', active: false },
-        { name: 'João Silva', ra: '123yk45', active: true },
-        { name: 'Maria Oliveira', ra: '67u890', active: false },
-        {name: 'João Silva', ra: '12ewq345', active: true},
-        {name: 'Maria Oliveira', ra: '67890xc', active: false},
-        { name: 'João Silva', ra: '12345f', active: true },
-        { name: 'Maria Oliveira', ra: '678v90', active: false },
-        { name: 'João Silva', ra: '12qwe345', active: true },
-        { name: 'Maria Oliveira', ra: '6789vb0', active: false },
-        {name: 'João Silva', ra: '123yukj45', active: true},
-        {name: 'Maria Oliveira', ra: '67casc890', active: false},
-        { name: 'João Silva', ra: '123cz45', active: true },
-        { name: 'Maria Oliveira', ra: '67jyt890', active: false },
-        { name: 'João Silva', ra: '123yk45', active: true },
-        { name: 'Maria Oliveira', ra: '67u890', active: false },
-        {name: 'João Silva', ra: '12ewq345', active: true},
-        {name: 'Maria Oliveira', ra: '67890xc', active: false},
+      snackbar: {
+        show: false,
+        message: '',
+        color: ''
+      },
+      students: [],
+      nameRules: [
+        v => !!v || 'Nome é obrigatório',
+        v => (v && v.length <= 50) || 'Nome deve ter no máximo 50 caracteres'
       ],
+      emailRules: [
+        v => !!v || 'Email é obrigatório',
+        v => /.+@.+\..+/.test(v) || 'E-mail deve ser válido'
+      ],
+      raRules: [
+        v => !!v || 'RA é obrigatório',
+        v => (v && v.length >= 6) || 'RA deve ter no minimo 6 caracteres',
+        v => (v && v.length <= 15) || 'RA deve ter no máximo 15 caracteres',
+        v => /^\d+$/.test(v) || 'RA deve conter apenas números'
+
+      ],
+      cpfRules: [
+        v => !!v || 'CPF é obrigatório',
+      ]
     };
   },
   computed: {
-    filteredStudents() {
-      const searchLower = this.search.toLowerCase();
-      return this.students.filter(student =>
-          student.name.toLowerCase().includes(searchLower) ||
-          student.ra.includes(searchLower)
-      );
-    },
     filteredActiveStudents() {
-      return this.filteredStudents.filter(student => student.active);
+      return this.students.filter(student => student.isActive);
     },
     filteredInactiveStudents() {
-      return this.filteredStudents.filter(student => !student.active);
+      return this.students.filter(student => !student.isActive);
     },
   },
   methods: {
+    async getStudents() {
+      try {
+        const res = await getStudents(this.search);
+        this.students = res.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     openDialog() {
       this.dialog = true;
     },
     closeDialog() {
       this.dialog = false;
     },
-    addStudent() {
-      if (this.newStudent.name && this.newStudent.ra) {
-        this.students.push({...this.newStudent});
-        this.newStudent = {name: '', ra: '', active: false};
-        this.closeDialog();
+    async addStudent() {
+      try {
+        const res = await createStudent(this.newStudent);
+        if (res.status === 201) {
+          await this.getStudents();
+          this.snackbar.message = 'Aluno adicionado com sucesso!';
+          this.snackbar.color = 'success';
+          this.snackbar.show = true;
+          this.newStudent = { firstName: "", lastName: "", ra: "", email: "", cpf: "" };
+        }
+      } catch (error) {
+        this.snackbar.message = `Erro ao adicionar aluno: ${error.response.data.join(",") || error.message}`;
+        this.snackbar.color = 'error';
+        this.snackbar.show = true;
       }
+      this.closeDialog();
     },
-    showStudentDetails(student) {
-      this.selectedStudent = {...student};
+    async showStudentDetails(student) {
+      const studentData = await getStudentById(student.ra)
+      this.studentDetails.firstName = studentData.data.fullName.split(' ')[0]
+      this.studentDetails.lastName = studentData.data.fullName.split(' ')[1]
+      this.studentDetails.email = studentData.data.email
+      this.studentDetails.cpf = studentData.data.cpf
+      this.studentDetails.ra = studentData.data.ra
+      this.studentDetails.active = studentData.data.isActive
       this.detailsDialog = true;
       this.isEditing = false;
     },
     closeDetailsDialog() {
       this.detailsDialog = false;
-      this.selectedStudent = null;
     },
     enableEditing() {
       this.isEditing = true;
     },
-    saveDetails() {
-      const index = this.students.findIndex(student => student.ra === this.selectedStudent.ra);
-      if (index !== -1) {
-        this.$set(this.students, index, {...this.selectedStudent});
+    async saveDetails() {
+      try {
+        const updateData = {
+          firstName: this.studentDetails.firstName,
+          lastName: this.studentDetails.lastName,
+          email: this.studentDetails.email,
+          isActive: this.studentDetails.active,
+        };
+        await updateStudent(this.studentDetails.ra, updateData);
+        this.snackbar.message = 'Detalhes do aluno atualizados com sucesso!';
+        this.snackbar.color = 'success';
+        this.snackbar.show = true;
+        this.closeDetailsDialog();
+        await this.getStudents();
+      } catch (error) {
+        this.snackbar.message = `Erro ao atualizar detalhes do aluno: ${error.response.data.join(",") || error.message}`;
+        this.snackbar.color = 'error';
+        this.snackbar.show = true;
       }
-      this.closeDetailsDialog();
     },
-    requestDeleteStudent(index) {
-      this.studentToDelete = this.students[index];
+    requestDeleteStudent(student) {
+      this.studentToDelete = student;
       this.deleteDialog = true;
     },
     cancelDelete() {
       this.deleteDialog = false;
       this.studentToDelete = null;
     },
-    confirmDelete() {
-      if (this.studentToDelete) {
-        const index = this.students.indexOf(this.studentToDelete);
-        if (index !== -1) {
-          this.students.splice(index, 1);
+    async confirmDelete() {
+      try {
+        if (this.studentToDelete) {
+          const res = await deleteStudent(this.studentToDelete.ra);
+          if (res.status === 204) {
+            await this.getStudents();
+            this.snackbar.message = 'Aluno excluído com sucesso!';
+            this.snackbar.color = 'success';
+            this.snackbar.show = true;
+          }
         }
-        this.deleteDialog = false;
-        this.studentToDelete = null;
+      } catch (error) {
+        this.snackbar.message = `Erro ao excluir aluno: ${error.response.data.join(",") || error.message}`;
+        this.snackbar.color = 'error';
+        this.snackbar.show = true;
       }
+      this.deleteDialog = false;
+      this.studentToDelete = null;
     },
   },
 }

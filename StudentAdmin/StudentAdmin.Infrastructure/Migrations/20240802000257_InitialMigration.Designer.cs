@@ -11,8 +11,8 @@ using StudentAdmin.Infrastructure.Database;
 namespace StudentAdmin.Infrastructure.Migrations
 {
     [DbContext(typeof(StudentAdminDbContext))]
-    [Migration("20240731151513_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20240802000257_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

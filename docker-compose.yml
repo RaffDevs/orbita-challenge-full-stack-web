@@ -36,8 +36,10 @@
   alunosadmin.web:
     container_name: alunosadmin.web
     build:
-      context: ./student_admin_web
+      context: ./student-admin-client
       dockerfile: Dockerfile
+    environment:
+      VUE_APP_API_URL: http://localhost:3002
     ports:
       - "3003:80"
     networks:
