@@ -105,7 +105,7 @@ Essas melhorias visam aprimorar a organização do código, a segurança e a efi
    
 5. **Pronto! O projeto já deve estar rodando. Para testar, acesse:**
    ```sh
-   http://localhost:3002
+   http://localhost:3003
    ```
 
 ### Como rodar os testes
