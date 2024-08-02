@@ -16,13 +16,11 @@
       </v-col>
     </v-row>
 
-    <!-- Toolbar com abas -->
     <v-tabs v-model="tab" centered>
       <v-tab>Ativos</v-tab>
       <v-tab>Inativos</v-tab>
     </v-tabs>
 
-    <!-- Conteúdo das abas -->
     <v-tabs-items v-model="tab" class="mt-3">
       <v-tab-item class="ma-3">
         <v-row v-if="students.length === 0">
@@ -65,7 +63,7 @@
       </v-tab-item>
     </v-tabs-items>
 
-    <!-- Dialog para Cadastrar Novo Aluno -->
+    <!-- Dialog: Cadastrar aluno -->
     <v-dialog v-model="dialog" max-width="500px" @click:outside="closeDialog">
       <v-card>
         <v-card-title>
@@ -107,7 +105,7 @@
       </v-card>
     </v-dialog>
 
-    <!-- Dialog de confirmação de exclusão -->
+    <!-- Dialog: confirma exclusão -->
     <v-dialog v-model="deleteDialog" max-width="290">
       <v-card>
         <v-card-title class="headline">Confirmar Exclusão</v-card-title>
@@ -120,7 +118,7 @@
       </v-card>
     </v-dialog>
 
-    <!-- Dialog para Mostrar e Editar Detalhes do Aluno -->
+    <!-- Dialog: Mostrar detalhrs -->
     <v-dialog v-model="detailsDialog" max-width="500px">
       <v-card>
         <v-card-title>
@@ -184,7 +182,6 @@
       </v-card>
     </v-dialog>
 
-    <!-- Floating Action Button -->
     <v-btn
         fab
         bottom
