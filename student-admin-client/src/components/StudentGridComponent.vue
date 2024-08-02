@@ -73,11 +73,31 @@
         </v-card-title>
         <v-card-text>
           <v-form>
-            <v-text-field v-model="newStudent.firstName" label="Nome"/>
-            <v-text-field v-model="newStudent.lastName" label="Sobrenome"/>
-            <v-text-field v-model="newStudent.email" label="Email"/>
-            <v-text-field v-model="newStudent.ra" label="Ra"/>
-            <v-text-field v-model="newStudent.cpf" label="Cpf"/>
+            <v-text-field
+                v-model="newStudent.ra"
+                label="RA"
+                :rules="raRules"
+            />
+            <v-text-field
+                v-model="newStudent.firstName"
+                label="Nome"
+                :rules="nameRules"
+            />
+            <v-text-field
+                v-model="newStudent.lastName"
+                label="Sobrenome"
+                :rules="nameRules"
+            />
+            <v-text-field
+                v-model="newStudent.email"
+                label="Email"
+                :rules="emailRules"
+            />
+            <v-text-field
+                v-model="newStudent.cpf"
+                label="CPF"
+                :rules="cpfRules"
+            />
           </v-form>
         </v-card-text>
         <v-card-actions>
@@ -176,6 +196,10 @@
     >
       <v-icon>mdi-plus</v-icon>
     </v-btn>
+    <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="3000">
+      {{ snackbar.message }}
+      <v-btn color="white" text @click="snackbar.show = false">Fechar</v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -215,7 +239,30 @@ export default {
         email: "",
         cpf: "",
       },
-      students: []
+      snackbar: {
+        show: false,
+        message: '',
+        color: ''
+      },
+      students: [],
+      nameRules: [
+        v => !!v || 'Nome é obrigatório',
+        v => (v && v.length <= 50) || 'Nome deve ter no máximo 50 caracteres'
+      ],
+      emailRules: [
+        v => !!v || 'Email é obrigatório',
+        v => /.+@.+\..+/.test(v) || 'E-mail deve ser válido'
+      ],
+      raRules: [
+        v => !!v || 'RA é obrigatório',
+        v => (v && v.length >= 6) || 'RA deve ter no minimo 6 caracteres',
+        v => (v && v.length <= 15) || 'RA deve ter no máximo 15 caracteres',
+        v => /^\d+$/.test(v) || 'RA deve conter apenas números'
+
+      ],
+      cpfRules: [
+        v => !!v || 'CPF é obrigatório',
+      ]
     };
   },
   computed: {
@@ -242,15 +289,19 @@ export default {
       this.dialog = false;
     },
     async addStudent() {
-      const res = await createStudent(this.newStudent);
-      if (res.status === 201) {
-        await this.getStudents()
-        this.newStudent.firstName = ""
-        this.newStudent.lastName = ""
-        this.newStudent.email = ""
-        this.newStudent.cpf = ""
-        this.newStudent.ra = ""
-        this.newStudent.active = ""
+      try {
+        const res = await createStudent(this.newStudent);
+        if (res.status === 201) {
+          await this.getStudents();
+          this.snackbar.message = 'Aluno adicionado com sucesso!';
+          this.snackbar.color = 'success';
+          this.snackbar.show = true;
+          this.newStudent = { firstName: "", lastName: "", ra: "", email: "", cpf: "" };
+        }
+      } catch (error) {
+        this.snackbar.message = `Erro ao adicionar aluno: ${error.response.data.join(",") || error.message}`;
+        this.snackbar.color = 'error';
+        this.snackbar.show = true;
       }
       this.closeDialog();
     },
@@ -272,15 +323,24 @@ export default {
       this.isEditing = true;
     },
     async saveDetails() {
-      const updateData = {
-        firstName: this.studentDetails.firstName,
-        lastName: this.studentDetails.lastName,
-        email: this.studentDetails.email,
-        isActive: this.studentDetails.active,
-      };
-      await updateStudent(this.studentDetails.ra, updateData);
-      this.closeDetailsDialog();
-      await this.getStudents()
+      try {
+        const updateData = {
+          firstName: this.studentDetails.firstName,
+          lastName: this.studentDetails.lastName,
+          email: this.studentDetails.email,
+          isActive: this.studentDetails.active,
+        };
+        await updateStudent(this.studentDetails.ra, updateData);
+        this.snackbar.message = 'Detalhes do aluno atualizados com sucesso!';
+        this.snackbar.color = 'success';
+        this.snackbar.show = true;
+        this.closeDetailsDialog();
+        await this.getStudents();
+      } catch (error) {
+        this.snackbar.message = `Erro ao atualizar detalhes do aluno: ${error.response.data.join(",") || error.message}`;
+        this.snackbar.color = 'error';
+        this.snackbar.show = true;
+      }
     },
     requestDeleteStudent(student) {
       this.studentToDelete = student;
@@ -291,15 +351,23 @@ export default {
       this.studentToDelete = null;
     },
     async confirmDelete() {
-      if (this.studentToDelete) {
-        var res = await deleteStudent(this.studentToDelete.ra)
-        if (res.status === 204) {
-          await this.getStudents()
-          this.deleteDialog = false;
-          this.studentToDelete = null;
+      try {
+        if (this.studentToDelete) {
+          const res = await deleteStudent(this.studentToDelete.ra);
+          if (res.status === 204) {
+            await this.getStudents();
+            this.snackbar.message = 'Aluno excluído com sucesso!';
+            this.snackbar.color = 'success';
+            this.snackbar.show = true;
+          }
         }
-        
+      } catch (error) {
+        this.snackbar.message = `Erro ao excluir aluno: ${error.response.data.join(",") || error.message}`;
+        this.snackbar.color = 'error';
+        this.snackbar.show = true;
       }
+      this.deleteDialog = false;
+      this.studentToDelete = null;
     },
   },
 }
