@@ -72,6 +72,7 @@ Essas melhorias visam aprimorar a organização do código, a segurança e a efi
 
 ### Como rodar o projeto
 1. **Tenha os requisitos instalados.**
+    **OBS:** para rodar a aplicação basta ter o docker. Caso queira rodar para desenvolvimento, necessário ter os requisitos citados acima.
 2. **Clone este repositório.**
    
    ```sh
