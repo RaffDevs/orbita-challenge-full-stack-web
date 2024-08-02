@@ -39,7 +39,7 @@
       context: ./student-admin-client
       dockerfile: Dockerfile
     environment:
-      VUE_APP_API_URL: http://localhost:3002
+      VUE_APP_API_URL: "alunosadmin.api"
     ports:
       - "3003:80"
     networks:
